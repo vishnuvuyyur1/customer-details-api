@@ -4,6 +4,8 @@
   - Spring Boot
   - JPA
   - In Memory DB
+  - Maven Build
+  - Environment: Embedded Tomcat container 
   
 # API Documentation
   Base URL: http://localhost:8080/api/v1
@@ -183,7 +185,7 @@ Request Body
 |----|---|---|---|
 |address|string | max 50 chars| yes| 
 |city|string | max 20 chars| yes |
-|state|number |max 20 chars|yes|
+|state/province|number |max 20 chars|yes|
 |country|string | max 20chars |yes |
 |zipCode|string | max 10 chars |yes |
 |addressType|enum |LIVING/SHIPPING/BILLING/OFFICE/BRANCH |yes |
@@ -222,3 +224,9 @@ Response
     }
 }
 ```
+# Next steps
+Fueatures to add
+- More test cases. Added minimum test cases for demo purpose.
+- Securing the API.
+- Improvised exception handling with codes.
+- UI for customer to interact for entering details.
