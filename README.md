@@ -18,8 +18,11 @@
 |5| Update customer address  | /customers/{id}/address | PUT |
 
 ## create customer
+- URI: /customers
+- Method: Post
+<br>
+Request Body
 
-Request 
   |Attributes|Type|Validation | Required | Method
 |----|---|---|---|---|
 |firstName|string | max 10 chars| yes| POST |
@@ -75,8 +78,74 @@ Response
 ```
 
 ## get all customers
-Request
+ - URI: /customers
+ - Method: GET
+
+Request Body <br>
 None
 
 Response
+```
+{
+    "statusCode": 200,
+    "message": "Success",
+    "data": [
+        {
+            "id": 1,
+            "firstName": "hello",
+            "lastName": "world",
+            "age": 10,
+            "addresses": [
+                {
+                    "id": 2,
+                    "address": "333 john doe st",
+                    "city": "Brussels",
+                    "state": "North Belgium",
+                    "zipCode": "5443351",
+                    "country": "Belgium",
+                    "addressType": "LIVING"
+                }
+            ]
+        }
+    ]
+}
+```
+## get customer by identifier
+ - URI: /customers/{id}
+ - Method: GET
 
+Request Body <br>
+None
+
+Response
+```
+{
+    "statusCode": 200,
+    "message": "Success",
+    "data": {
+        "id": 1,
+        "firstName": "hello",
+        "lastName": "world",
+        "age": 10,
+        "addresses": [
+            {
+                "id": 2,
+                "address": "333 john doe st",
+                "city": "Brussels",
+                "state": "North Belgium",
+                "zipCode": "5443351",
+                "country": "Belgium",
+                "addressType": "LIVING"
+            }
+        ]
+    }
+}
+```
+## get customers by first name
+URI: /customers?firstName={value}
+Method: GET
+
+Request Body <br>
+None
+
+Response
