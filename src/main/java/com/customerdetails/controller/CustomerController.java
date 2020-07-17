@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,9 +23,11 @@ import com.customerdetails.model.ApiResponse;
 import com.customerdetails.service.CustomerDetailsService;
 
 @RestController
+@RequestMapping("/management/api/v1")
 public class CustomerController {
 
 	private static final String SUCCESS = "Success";
+	private static final String REQUEST_PARAM_FIRSTNAME = "firstName";
 	private static final String PATH_CUSTOMERS = "/customers";
 	private static final String PATH_CUSTOMER_BY_ID = "/customers/{id}";
 	private static final String PATH_CUSTOMER_ADDRESS = "/customers/{id}/address";
@@ -55,9 +58,9 @@ public class CustomerController {
 		}
 	}
 
-	@GetMapping(value = PATH_CUSTOMERS, params = "firstName")
+	@GetMapping(value = PATH_CUSTOMERS, params = REQUEST_PARAM_FIRSTNAME)
 	public CompletableFuture<ApiResponse<?>> getCustomersByFirstName(
-			@RequestParam(name = "firstName", required = true) String firstName) throws CustomerDetailsApiException {
+			@RequestParam(name = REQUEST_PARAM_FIRSTNAME, required = true) String firstName) throws CustomerDetailsApiException {
 		try {
 			List<Customer> customers = customerService.getCustomersByFirstName(firstName);
 			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS,

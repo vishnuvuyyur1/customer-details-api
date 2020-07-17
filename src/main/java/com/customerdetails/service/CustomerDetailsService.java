@@ -45,7 +45,6 @@ public class CustomerDetailsService implements ICustomerDetailsService{
 		Set<Address> updatedAddress = existingCustomer.getAddresses().stream()
 			    .map(existingAddress -> existingAddress.getAddressType().toString().equals(newAddress.getAddressType().toString()) ? updateAddress(newAddress,existingAddress) : existingAddress)
 			    .collect(toSet());
-		System.out.println(updatedAddress);
 		existingCustomer.getAddresses().clear();
 		existingCustomer.getAddresses().addAll(updatedAddress);
 		return customerDetailsRepository.save(existingCustomer);

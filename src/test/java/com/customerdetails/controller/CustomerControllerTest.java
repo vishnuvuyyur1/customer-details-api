@@ -38,8 +38,8 @@ class CustomerControllerTest {
 
 	private TestData testData;
 
-	private static final String TEST_ENDPOINT_CUSTOMERS = "/api/v1/customers";
-	private static final String TEST_ENDPOINT_CUSTOMERS_BY_ID = "/api/v1/customers/{id}";
+	private static final String TEST_ENDPOINT_CUSTOMERS = "/management/api/v1/customers";
+	private static final String TEST_ENDPOINT_CUSTOMERS_BY_ID = "/management/api/v1/customers/{id}";
 	
 	@BeforeEach
 	void setUp() {

@@ -39,21 +39,21 @@ public class CustomerDetailsServiceTest {
 	}
 
 	@Test
-	@DisplayName("Given an operation from service to get all customer, we expect service to invoke the respository to get the data")
+	@DisplayName("Given a service method to get all customer, we expect service to invoke the respository to get the data")
 	public void getCustomersTest() {
 		given(customerDetailsRepository.findAll()).willReturn(testData.getCustomers());
 		List<Customer> expected = customerDetailsService.getCustomers();
-		assertEquals(expected, testData.getCustomers());
+		assertEquals(expected.size(), testData.getCustomers().size());
 		Mockito.verify(customerDetailsRepository, Mockito.times(1)).findAll();
 	}
 
 	@Test
-	@DisplayName("Given an operation from service to get customer based on ID, we expect service to invoke the respository to get the data")
+	@DisplayName("Given a service method to get customer based on ID, we expect service to invoke the respository to get the data")
 	public void getCustomerByIdTest() {
 		final Long id = 1L;
 		given(customerDetailsRepository.findById(id)).willReturn(Optional.of(testData.getCustomer()));
 		Customer expected = customerDetailsService.getCustomerById(id);
-		assertEquals(expected, testData.getCustomer());
+		assertEquals(expected.getFirstName(), testData.getCustomer().getFirstName());
 		Mockito.verify(customerDetailsRepository, Mockito.times(1)).findById(Mockito.anyLong());
 	}
 }
