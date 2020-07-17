@@ -13,16 +13,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "CUSTOMER")
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class Customer {
 
 	@Id
@@ -45,7 +48,6 @@ public class Customer {
 	@Max(150)
 	private int age;
 
-	@NotNull
 	@JsonManagedReference
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Address> addresses;
@@ -62,14 +64,11 @@ public class Customer {
 
 	public Customer(@Size(max = 20) @NotBlank(message = "First Name is mandatory") String firstName,
 			@Size(max = 20) @NotBlank(message = "Last Name is mandatory") String lastName, @Min(1) @Max(150) int age,
-			@NotNull Set<Address> addresses) {
+			Set<Address> addresses) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
 		this.addresses = addresses;
-	}
-
-	public Customer() {
 	}
 
 }

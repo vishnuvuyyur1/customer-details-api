@@ -1,5 +1,6 @@
 package com.customerdetails.controller;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import javax.validation.Valid;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +22,6 @@ import com.customerdetails.model.ApiResponse;
 import com.customerdetails.service.CustomerDetailsService;
 
 @RestController
-@RequestMapping("/api/v1")
 public class CustomerController {
 
 	private static final String SUCCESS = "Success";
@@ -36,8 +35,9 @@ public class CustomerController {
 	@GetMapping(PATH_CUSTOMERS)
 	public CompletableFuture<ApiResponse<?>> getAllCustomers() {
 		try {
+			List<Customer> customersList = customerService.getCustomers();
 			return CompletableFuture.supplyAsync(
-					() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customerService.getCustomers()));
+					() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customersList));
 		} catch (Exception ex) {
 			throw new CustomerDetailsApiException(ex.getMessage(), ex);
 		}
@@ -46,20 +46,22 @@ public class CustomerController {
 	@GetMapping(PATH_CUSTOMER_BY_ID)
 	public CompletableFuture<ApiResponse<?>> getCustomerById(@PathVariable(value = "id") Long customerId)
 			throws CustomerDetailsApiException {
+		Customer customer = customerService.getCustomerById(customerId);
 		try {
 			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS,
-					customerService.getCustomerById(customerId)));
+					customer));
 		} catch (Exception ex) {
 			throw new CustomerDetailsApiException(ex.getMessage(), ex);
 		}
 	}
 
-	@GetMapping(PATH_CUSTOMERS)
+	@GetMapping(value = PATH_CUSTOMERS, params = "firstName")
 	public CompletableFuture<ApiResponse<?>> getCustomersByFirstName(
-			@RequestParam(value = "firstName", required = true) String firstName) throws CustomerDetailsApiException {
+			@RequestParam(name = "firstName", required = true) String firstName) throws CustomerDetailsApiException {
 		try {
+			List<Customer> customers = customerService.getCustomersByFirstName(firstName);
 			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS,
-					customerService.getCustomersByFirstName(firstName)));
+					customers));
 		} catch (Exception ex) {
 			throw new CustomerDetailsApiException(ex.getMessage(), ex);
 		}
@@ -79,8 +81,9 @@ public class CustomerController {
 	public CompletableFuture<ApiResponse<?>> updateCustomerAddress(@PathVariable(value = "id") Long customerId,
 			@Valid @RequestBody Address address) {
 		try {
+			Customer updated = customerService.updateCustomerAddress(customerId, address);
 			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS,
-					customerService.updateCustomerAddress(customerId, address)));
+					updated));
 		} catch (Exception ex) {
 			throw new CustomerDetailsApiException(ex.getMessage(), ex);
 		}

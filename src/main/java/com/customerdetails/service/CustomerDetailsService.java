@@ -43,10 +43,18 @@ public class CustomerDetailsService implements ICustomerDetailsService{
 	public Customer updateCustomerAddress(Long customerId, Address newAddress) {
 		Customer existingCustomer = getCustomer(customerId);
 		Set<Address> updatedAddress = existingCustomer.getAddresses().stream()
-			    .map(existingAddress -> existingAddress.getAddressType().toString().equals(newAddress.getAddressType().toString()) ? newAddress : existingAddress)
+			    .map(existingAddress -> existingAddress.getAddressType().toString().equals(newAddress.getAddressType().toString()) ? updateAddress(newAddress,existingAddress) : existingAddress)
 			    .collect(toSet());
-		existingCustomer.setAddresses(updatedAddress);
+		System.out.println(updatedAddress);
+		existingCustomer.getAddresses().clear();
+		existingCustomer.getAddresses().addAll(updatedAddress);
 		return customerDetailsRepository.save(existingCustomer);
+	}
+	
+	private Address updateAddress(Address newAddress, Address existing) {
+		newAddress.setCustomer(existing.getCustomer());
+		newAddress.setId(existing.getId());
+		return newAddress;
 	}
 	
 	private Customer getCustomer(Long id) {

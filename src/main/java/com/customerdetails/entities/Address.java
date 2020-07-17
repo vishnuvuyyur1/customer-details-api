@@ -16,11 +16,15 @@ import javax.validation.constraints.Size;
 import com.customerdetails.model.AddressType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "ADDRESS")
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class Address {
 
 	@Id
@@ -74,6 +78,5 @@ public class Address {
 		this.country = country;
 		this.addressType = addressType;
 	}
-	
-	
+
 }

@@ -11,12 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -29,7 +27,6 @@ import com.customerdetails.service.CustomerDetailsService;
  * an API call to the controller along with mock a service.
  * Includes: Two demo test cases
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(controllers = CustomerController.class)
 class CustomerControllerTest {
 
@@ -42,7 +39,8 @@ class CustomerControllerTest {
 	private TestData testData;
 
 	private static final String TEST_ENDPOINT_CUSTOMERS = "/api/v1/customers";
-
+	private static final String TEST_ENDPOINT_CUSTOMERS_BY_ID = "/api/v1/customers/{id}";
+	
 	@BeforeEach
 	void setUp() {
 		testData = new TestData();
@@ -59,6 +57,21 @@ class CustomerControllerTest {
 				.andExpect(jsonPath("$.size()", is(testData.getCustomers().size())));
 
 		Mockito.verify(customerService, Mockito.times(1)).getCustomers();
+	}
+	
+	@Test
+	@DisplayName("Given a call to an API end point to get a customer by an identifier, we expect 200 Status with the actual customer data provided by our mock service test data")
+	void getAllCustomerByIdTest() throws Exception {
+		Long id = 2L;
+		given(customerService.getCustomerById(id)).willReturn(testData.getCustomer());
+		MvcResult mvcResult = this.mockMvc.perform(get(TEST_ENDPOINT_CUSTOMERS_BY_ID, id))
+				.andExpect(request().asyncStarted()).andDo(MockMvcResultHandlers.log()).andReturn();
+
+		mockMvc.perform(asyncDispatch(mvcResult)).andExpect(status().isOk())
+				.andExpect(jsonPath("$.data.firstName", is(testData.getCustomer().getFirstName())))
+				.andExpect(jsonPath("$.data.lastName", is(testData.getCustomer().getLastName())));
+
+		Mockito.verify(customerService, Mockito.times(1)).getCustomerById(id);
 	}
 
 }

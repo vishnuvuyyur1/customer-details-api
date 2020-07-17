@@ -7,10 +7,8 @@ import java.util.Optional;
 import org.junit.After;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.customerdetails.data.TestData;
 import com.customerdetails.entities.Customer;
@@ -19,7 +17,6 @@ import com.customerdetails.entities.Customer;
  * interaction to the in-memory DataBase.
  * Includes: Two demo test cases
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class CustomerDetailsRepositoryIntegrationTest {
 	private final Long TEST_ID = (long) 1;
