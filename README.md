@@ -8,7 +8,7 @@
   - Environment: Embedded Tomcat container 
   
 # API Documentation
-  Base URL: http://localhost:8080/api/v1
+  Base URL: http://localhost:8080/management/api/v1 <br>
   Operations:
   
   |No| Operation | Endpoint | Method
@@ -228,6 +228,7 @@ Response
 ```
 # Next steps
 Fueatures to add
+- swagger documentation
 - More test cases. Added minimum test cases for demo purpose.
 - Securing the API.
 - Improvised exception handling with codes.
