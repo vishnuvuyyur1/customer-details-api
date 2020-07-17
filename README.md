@@ -31,6 +31,8 @@ Request Body
 |lastName|string | max 10 chars| yes |
 |age|number |min 1 max 150 (num)|yes| 
 |addresses|Address | min 1 |yes |
+
+Address Type table is available below at section 5. update customer address
 ```
 {
 	"firstName": "hello",
@@ -180,7 +182,7 @@ Response
 URI: /customers/{id}/address
 Method: PUT
 
-Request Body 
+Request Body : Address Type
   |Attributes|Type|Validation | Required |
 |----|---|---|---|
 |address|string | max 50 chars| yes| 
