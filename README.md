@@ -73,3 +73,10 @@ Response
 	}
 }
 ```
+
+## get all customers
+Request
+None
+
+Response
+
