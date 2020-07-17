@@ -10,7 +10,6 @@ public class ApiResponse<T> {
 	  private T data;
 	
 	  public ApiResponse(int statusCode, String message, T data) {
-		super();
 		this.statusCode = statusCode;
 		this.message = message;
 		this.data = data;

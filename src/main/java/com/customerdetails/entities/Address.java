@@ -2,6 +2,8 @@ package com.customerdetails.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.customerdetails.model.AddressType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
@@ -50,12 +53,27 @@ public class Address {
 	@NotBlank(message = "Country is mandatory")
 	private String country;
 	
-	@Column(name = "active", nullable = false)
-	@Size(max = 20)
-	@NotBlank(message = "Current living address indicator is mandatory")
-	private boolean active;
+    @Enumerated(EnumType.STRING)
+    @Column(name="address_type",nullable=false, length=10)
+    private AddressType addressType;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Customer customer;
+
+	public Address(@Size(max = 50) @NotBlank(message = "Address is mandatory") String address,
+			@Size(max = 20) @NotBlank(message = "city is mandatory") String city,
+			@Size(max = 20) @NotBlank(message = "State/Province is mandatory") String state,
+			@Size(max = 10) @NotBlank(message = "Zip Code is mandatory") String zipCode,
+			@Size(max = 20) @NotBlank(message = "Country is mandatory") String country,
+			@NotBlank(message = "Address Type is mandatory") AddressType addressType) {
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+		this.country = country;
+		this.addressType = addressType;
+	}
+	
+	
 }

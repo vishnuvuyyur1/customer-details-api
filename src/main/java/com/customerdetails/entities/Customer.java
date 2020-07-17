@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Entity
-@Table(name="CUSTOMER")
+@Table(name = "CUSTOMER")
 @Data
 public class Customer {
 
@@ -29,38 +29,47 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	
-	   @Column(name="first_name", nullable=false, length=20)
-	   @Size(max = 20)
-	   @NotBlank(message = "First Name is mandatory")
-	   private String firstName;	
-	    
-	   @Column(name = "last_name", nullable=false, length=20)
-	   @Size(max = 20)
-	   @NotBlank(message = "Last Name is mandatory")
-	   private String lastName;
-		
-	    @Column(name="age", nullable = false)
-	    @Min(1)
-	    @Max(150)
-	    private int age;
-		
-	    @NotNull
-		@JsonManagedReference
-		@OneToMany(
-			        mappedBy = "customer",
-			        cascade = CascadeType.ALL,
-			        orphanRemoval = true
-			    )
-		 private Set<Address> addresses;
-		
-		  public void addAddress(Address address) {
-			  addresses.add(address);
-			  address.setCustomer(this);
-		    }
-		 
-		    public void removeAddress(Address address) {
-		    	addresses.remove(address);
-		    	address.setCustomer(null);
-		    }
+
+	@Column(name = "first_name", nullable = false, length = 20)
+	@Size(max = 20)
+	@NotBlank(message = "First Name is mandatory")
+	private String firstName;
+
+	@Column(name = "last_name", nullable = false, length = 20)
+	@Size(max = 20)
+	@NotBlank(message = "Last Name is mandatory")
+	private String lastName;
+
+	@Column(name = "age", nullable = false)
+	@Min(1)
+	@Max(150)
+	private int age;
+
+	@NotNull
+	@JsonManagedReference
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Address> addresses;
+
+	public void addAddress(Address address) {
+		addresses.add(address);
+		address.setCustomer(this);
+	}
+
+	public void removeAddress(Address address) {
+		addresses.remove(address);
+		address.setCustomer(null);
+	}
+
+	public Customer(@Size(max = 20) @NotBlank(message = "First Name is mandatory") String firstName,
+			@Size(max = 20) @NotBlank(message = "Last Name is mandatory") String lastName, @Min(1) @Max(150) int age,
+			@NotNull Set<Address> addresses) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.addresses = addresses;
+	}
+
+	public Customer() {
+	}
+
 }

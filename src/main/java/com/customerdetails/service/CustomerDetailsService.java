@@ -1,20 +1,58 @@
 package com.customerdetails.service;
 
-import java.util.List;
+import static java.util.stream.Collectors.toSet;
 
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.customerdetails.dao.CustomerDetailsRepository;
 import com.customerdetails.entities.Address;
 import com.customerdetails.entities.Customer;
+import com.customerdetails.exception.CustomerDetailsApiException;
 
-public interface CustomerDetailsService {
+@Service
+public class CustomerDetailsService implements ICustomerDetailsService{
 
-	public Customer addCustomer(Customer customer);
+	@Autowired
+    private CustomerDetailsRepository customerDetailsRepository;
 	
-	public List<Customer> getCustomers();
+	@Override
+	public Customer addCustomer(Customer customer) {
+		return customerDetailsRepository.save(customer);
+	}
+
+	@Override
+	public List<Customer> getCustomers() {
+		return customerDetailsRepository.findAll();
+	}
+
+	@Override
+	public Customer getCustomerById(Long id) {
+		return getCustomer(id);
+	}
+
+	@Override
+	public List<Customer> getCustomersByFirstName(String firstName) {
+		return customerDetailsRepository.findByFirstName(firstName);
+	}
+
+	@Override
+	public Customer updateCustomerAddress(Long customerId, Address newAddress) {
+		Customer existingCustomer = getCustomer(customerId);
+		Set<Address> updatedAddress = existingCustomer.getAddresses().stream()
+			    .map(existingAddress -> existingAddress.getAddressType().toString().equals(newAddress.getAddressType().toString()) ? newAddress : existingAddress)
+			    .collect(toSet());
+		existingCustomer.setAddresses(updatedAddress);
+		return customerDetailsRepository.save(existingCustomer);
+	}
 	
-	public Address updateCustomerAddress(Long customerId, Address address);
-	
-	public Customer getCustomerById(Long id);
-	
-	public List<Customer> getCustomerByFirstName(String firstName);
+	private Customer getCustomer(Long id) {
+		return customerDetailsRepository
+		.findById(id)
+		.orElseThrow(() -> new CustomerDetailsApiException("Customer does not exist for id :: " + id));
+	}
 
 }

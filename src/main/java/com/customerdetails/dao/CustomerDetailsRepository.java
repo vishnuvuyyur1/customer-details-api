@@ -13,5 +13,5 @@ import com.customerdetails.entities.Customer;
 public interface CustomerDetailsRepository extends JpaRepository<Customer, Long> {
 
 	@Query(value = "SELECT * FROM CUSTOMER where first_name = :firstName;", nativeQuery = true)
-    public List<Customer> findByFirstName(@Param("firstName") String firstName);
+	public List<Customer> findByFirstName(@Param("firstName") String firstName);
 }
