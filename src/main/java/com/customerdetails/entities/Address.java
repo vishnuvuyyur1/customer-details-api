@@ -56,10 +56,10 @@ public class Address {
 	@Size(max = 20)
 	@NotBlank(message = "Country is mandatory")
 	private String country;
-	
-    @Enumerated(EnumType.STRING)
-    @Column(name="address_type",nullable=false, length=10)
-    private AddressType addressType;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "address_type", nullable = false, length = 10)
+	private AddressType addressType;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -79,4 +79,19 @@ public class Address {
 		this.addressType = addressType;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Address))
+			return false;
+		if (obj == this)
+			return true;
+		return id != null && this.getId() == ((Address) obj).getId();
+	}
+
+	@Override
+	public int hashCode() {
+		return 31;
+	}
 }

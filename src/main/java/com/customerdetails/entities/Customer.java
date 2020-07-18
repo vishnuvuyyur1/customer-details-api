@@ -73,4 +73,19 @@ public class Customer {
 		this.addresses = addresses;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Customer))
+			return false;
+		if (obj == this)
+			return true;
+		return id != null && this.getId() == ((Customer) obj).getId();
+	}
+
+	@Override
+	public int hashCode() {
+		return 31;
+	}
 }
