@@ -6,7 +6,7 @@ import com.customerdetails.entities.Address;
 import com.customerdetails.entities.Customer;
 
 /**
- * Interface specifying the operations offered by this service implementor
+ * Interface specifying the operations offered by this service
  *
  */
 public interface ICustomerDetailsService {
