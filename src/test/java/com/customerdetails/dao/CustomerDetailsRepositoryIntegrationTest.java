@@ -12,10 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.customerdetails.data.TestData;
 import com.customerdetails.entities.Customer;
+
 /**
- * Integration Testing the repository by establishing a real
- * interaction to the in-memory DataBase.
- * Includes: Two demo test cases
+ * Integration Testing the repository by establishing a real interaction to the
+ * in-memory DataBase. Includes: Two demo test cases
  */
 @SpringBootTest
 public class CustomerDetailsRepositoryIntegrationTest {

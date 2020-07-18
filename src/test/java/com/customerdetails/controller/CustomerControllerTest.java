@@ -24,8 +24,8 @@ import com.customerdetails.service.CustomerDetailsService;
 
 /**
  * Unit Testing the controller with a stand alone setup using MockMVC to mimic
- * an API call to the controller along with mock a service.
- * Includes: Two demo test cases
+ * an API call to the controller along with mock a service. Includes: Two demo
+ * test cases
  */
 @WebMvcTest(controllers = CustomerController.class)
 class CustomerControllerTest {
@@ -40,7 +40,7 @@ class CustomerControllerTest {
 
 	private static final String TEST_ENDPOINT_CUSTOMERS = "/management/api/v1/customers";
 	private static final String TEST_ENDPOINT_CUSTOMERS_BY_ID = "/management/api/v1/customers/{id}";
-	
+
 	@BeforeEach
 	void setUp() {
 		testData = new TestData();
@@ -58,7 +58,7 @@ class CustomerControllerTest {
 
 		Mockito.verify(customerService, Mockito.times(1)).getCustomers();
 	}
-	
+
 	@Test
 	@DisplayName("Given a call to an API end point to get a customer by an identifier, we expect 200 Status with the actual customer data provided by our mock service test data")
 	void getAllCustomerByIdTest() throws Exception {

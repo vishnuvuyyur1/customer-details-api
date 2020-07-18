@@ -12,13 +12,18 @@ import com.customerdetails.dao.CustomerDetailsRepository;
 import com.customerdetails.entities.Address;
 import com.customerdetails.entities.Customer;
 import com.customerdetails.exception.CustomerDetailsApiException;
+import com.customerdetails.model.ErrorMessage;
 
+/**
+ * Service layer to perform business logic.
+ *
+ */
 @Service
-public class CustomerDetailsService implements ICustomerDetailsService{
+public class CustomerDetailsService implements ICustomerDetailsService {
 
 	@Autowired
-    private CustomerDetailsRepository customerDetailsRepository;
-	
+	private CustomerDetailsRepository customerDetailsRepository;
+
 	@Override
 	public Customer addCustomer(Customer customer) {
 		return customerDetailsRepository.save(customer);
@@ -43,23 +48,24 @@ public class CustomerDetailsService implements ICustomerDetailsService{
 	public Customer updateCustomerAddress(Long customerId, Address newAddress) {
 		Customer existingCustomer = getCustomer(customerId);
 		Set<Address> updatedAddress = existingCustomer.getAddresses().stream()
-			    .map(existingAddress -> existingAddress.getAddressType().toString().equals(newAddress.getAddressType().toString()) ? updateAddress(newAddress,existingAddress) : existingAddress)
-			    .collect(toSet());
+				.map(existingAddress -> existingAddress.getAddressType().toString()
+						.equals(newAddress.getAddressType().toString()) ? updateAddress(newAddress, existingAddress)
+								: existingAddress)
+				.collect(toSet());
 		existingCustomer.getAddresses().clear();
 		existingCustomer.getAddresses().addAll(updatedAddress);
 		return customerDetailsRepository.save(existingCustomer);
 	}
-	
+
 	private Address updateAddress(Address newAddress, Address existing) {
 		newAddress.setCustomer(existing.getCustomer());
 		newAddress.setId(existing.getId());
 		return newAddress;
 	}
-	
+
 	private Customer getCustomer(Long id) {
-		return customerDetailsRepository
-		.findById(id)
-		.orElseThrow(() -> new CustomerDetailsApiException("Customer does not exist for id :: " + id));
+		return customerDetailsRepository.findById(id)
+				.orElseThrow(() -> new CustomerDetailsApiException(ErrorMessage.ERROR_NOT_FOUND.getValue() + id));
 	}
 
 }

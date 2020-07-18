@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.customerdetails.entities.Customer;
 
+/**
+ * Data access layer to interact with Data Base
+ *
+ */
 @Repository
 public interface CustomerDetailsRepository extends JpaRepository<Customer, Long> {
 

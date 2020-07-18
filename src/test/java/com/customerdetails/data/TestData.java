@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import com.customerdetails.entities.Address;
 import com.customerdetails.entities.Customer;
 import com.customerdetails.model.AddressType;
+
 /**
- * Test data being shared for unit and integration tests 
- * across multiple tests.
+ * Test data being shared for unit and integration tests across multiple tests.
  * 
  */
 @Component

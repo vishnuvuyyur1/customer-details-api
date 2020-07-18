@@ -17,10 +17,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.customerdetails.dao.CustomerDetailsRepository;
 import com.customerdetails.data.TestData;
 import com.customerdetails.entities.Customer;
+
 /**
- * Unit Testing the service class with Stand alone setup 
- * with pure mocking and no integration.
- * Includes: Two demo test cases
+ * Unit Testing the service class with Stand alone setup with pure mocking and
+ * no integration. Includes: Two demo test cases
  */
 @ExtendWith(MockitoExtension.class)
 public class CustomerDetailsServiceTest {
