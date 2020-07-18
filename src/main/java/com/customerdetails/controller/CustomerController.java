@@ -56,9 +56,9 @@ public class CustomerController {
 	@GetMapping(PATH_CUSTOMER_BY_ID)
 	public CompletableFuture<ApiResponse<?>> getCustomerById(@PathVariable(value = "id") Long customerId)
 			throws CustomerDetailsApiException {
-		Customer customer = customerService.getCustomerById(customerId);
 		try {
-			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customer));
+			return CompletableFuture.completedFuture(
+					new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customerService.getCustomerById(customerId)));
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			throw new CustomerDetailsApiException(ErrorMessage.ERROR_GET.getValue(), ex);
