@@ -1,6 +1,5 @@
 package com.customerdetails.controller;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import javax.validation.Valid;
@@ -46,9 +45,8 @@ public class CustomerController {
 	@GetMapping(PATH_CUSTOMERS)
 	public CompletableFuture<ApiResponse<?>> getAllCustomers() {
 		try {
-			List<Customer> customersList = customerService.getCustomers();
 			return CompletableFuture
-					.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customersList));
+					.completedFuture(new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customerService.getCustomers()));
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			throw new CustomerDetailsApiException(ErrorMessage.ERROR_GET.getValue(), ex);
@@ -72,8 +70,8 @@ public class CustomerController {
 			@RequestParam(name = REQUEST_PARAM_FIRSTNAME, required = true) String firstName)
 			throws CustomerDetailsApiException {
 		try {
-			List<Customer> customers = customerService.getCustomersByFirstName(firstName);
-			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customers));
+			return CompletableFuture.completedFuture(new ApiResponse<>(HttpStatus.OK.value(), SUCCESS,
+					customerService.getCustomersByFirstName(firstName)));
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			throw new CustomerDetailsApiException(ErrorMessage.ERROR_GET.getValue(), ex);
@@ -83,8 +81,8 @@ public class CustomerController {
 	@PostMapping(PATH_CUSTOMERS)
 	public CompletableFuture<ApiResponse<?>> createCustomer(@Valid @RequestBody Customer customer) {
 		try {
-			return CompletableFuture.supplyAsync(
-					() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customerService.addCustomer(customer)));
+			return CompletableFuture.completedFuture(
+					new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, customerService.addCustomer(customer)));
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			throw new CustomerDetailsApiException(ErrorMessage.ERROR_POST.getValue(), ex);
@@ -95,8 +93,8 @@ public class CustomerController {
 	public CompletableFuture<ApiResponse<?>> updateCustomerAddress(@PathVariable(value = "id") Long customerId,
 			@Valid @RequestBody Address address) {
 		try {
-			Customer updated = customerService.updateCustomerAddress(customerId, address);
-			return CompletableFuture.supplyAsync(() -> new ApiResponse<>(HttpStatus.OK.value(), SUCCESS, updated));
+			return CompletableFuture.completedFuture(new ApiResponse<>(HttpStatus.OK.value(), SUCCESS,
+					customerService.updateCustomerAddress(customerId, address)));
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			throw new CustomerDetailsApiException(ErrorMessage.ERROR_UPDATE.getValue(), ex);

@@ -65,7 +65,7 @@ public class CustomerDetailsService implements ICustomerDetailsService {
 
 	private Customer getCustomer(Long id) {
 		return customerDetailsRepository.findById(id)
-				.orElseThrow(() -> new CustomerDetailsApiException(ErrorMessage.ERROR_NOT_FOUND.getValue() + id));
+				.orElseThrow(() -> new CustomerDetailsApiException(ErrorMessage.ERROR_NOT_FOUND.getValue()));
 	}
 
 }
