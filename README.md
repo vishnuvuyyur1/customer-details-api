@@ -30,7 +30,7 @@ Request Body
 |firstName|string | max 10 chars| yes|
 |lastName|string | max 10 chars| yes |
 |age|number |min 1 max 150 (num)|yes| 
-|addresses|Address | min 1 |yes |
+|addresses|array[Address] | min 1 |yes |
 
 Address Type table is available below at section 5. update customer address
 ```
@@ -57,7 +57,7 @@ Response
 |firstName|string | 
 |lastName|string | 
 |age|number | 
-|addresses|Address |
+|addresses|array[Address] |
 
 ```
 {
