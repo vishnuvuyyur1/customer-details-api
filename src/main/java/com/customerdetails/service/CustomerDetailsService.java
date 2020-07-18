@@ -25,7 +25,7 @@ public class CustomerDetailsService implements ICustomerDetailsService {
 	private CustomerDetailsRepository customerDetailsRepository;
 
 	@Override
-	public Customer addCustomer(Customer customer) {
+	public Customer addCustomer(final Customer customer) {
 		return customerDetailsRepository.save(customer);
 	}
 
@@ -35,17 +35,17 @@ public class CustomerDetailsService implements ICustomerDetailsService {
 	}
 
 	@Override
-	public Customer getCustomerById(Long id) {
+	public Customer getCustomerById(final Long id) {
 		return getCustomer(id);
 	}
 
 	@Override
-	public List<Customer> getCustomersByFirstName(String firstName) {
+	public List<Customer> getCustomersByFirstName(final String firstName) {
 		return customerDetailsRepository.findByFirstName(firstName);
 	}
 
 	@Override
-	public Customer updateCustomerAddress(Long customerId, Address newAddress) {
+	public Customer updateCustomerAddress(final Long customerId, final Address newAddress) {
 		Customer existingCustomer = getCustomer(customerId);
 		Set<Address> updatedAddress = existingCustomer.getAddresses().stream()
 				.map(existingAddress -> existingAddress.getAddressType().toString()
